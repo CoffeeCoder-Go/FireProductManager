@@ -8,10 +8,7 @@ import configuration.DatabaseConnection;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
 import entity.Produto;
-import java.awt.KeyboardFocusManager;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import view.helpers.FloatVerifier;
 
 /**
  *
@@ -35,7 +32,7 @@ public class Formulario extends javax.swing.JFrame {
     public Formulario() {
         initComponents();
         
-        controller = new ProdutoController(new MySQLProdutosDAO(DatabaseConnection.connect()));
+        controller = new ProdutoController(new MySQLProdutosDAO());
         
   
         
@@ -62,7 +59,6 @@ public class Formulario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Formulário");
-        setAlwaysOnTop(true);
         setResizable(false);
 
         nome.setMinimumSize(new java.awt.Dimension(120, 100));
