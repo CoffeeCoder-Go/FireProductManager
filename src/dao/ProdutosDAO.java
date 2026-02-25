@@ -9,13 +9,14 @@ import java.util.List;
 
 /**
  *
- * @author cliente
+ * @author Henrique Rigoni Nunes
  */
+// Interface padrão de implementação das ações de armazenamento
 public interface ProdutosDAO {
-    public void create(Produto produto);
-    public List<Produto> getAll();
-    public List<Produto> searchByName(String nome);
-    public Produto getById(Long id);
-    public Integer update(Long id,Produto newProduto);
-    public Boolean delete(Long id);
+    public void create(Produto produto);// Registra um produto
+    public List<Produto> getAll();// Pega todos os produtos
+    public List<Produto> searchByName(String nome);// Procura produto pelo nome
+    public Produto getById(Long id);// Pega um produto especifico pelo id
+    public Integer update(Long id,Produto newProduto);// Modifica um produto e retorna o tanto de linhas que foram modificadas
+    public Boolean delete(Long id);// Deleta um produto e retorna um booleano
 }

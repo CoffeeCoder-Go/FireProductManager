@@ -6,8 +6,9 @@ package entity;
 
 /**
  *
- * @author cliente
+ * @author Henrique Rigoni Nunes
  */
+// Identifica qual é a ação
 public enum EventType {
     CREATE(1),
     UPDATE(2),

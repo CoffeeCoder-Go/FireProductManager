@@ -6,16 +6,30 @@ package entity;
 
 /**
  *
- * @author cliente
+ * @author Henrique Rigoni Nunes
  */
+// Modelo Produto
 public class Produto {
+    /*
+        CREATE TABLE IF NOT EXISTS produtos (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            nome VARCHAR(150) UNIQUE NOT NULL,
+            quantidade INTEGER NOT NULL,
+            precoPorUnidade DECIMAL(10,2) NOT NULL
+        );
+    */
+    
     private Long id;
     private String nome;
     private Integer quantidade;
     private Float precoUnidade;
     
+    
+    // Construtor Padrão
     public Produto(){}
 
+    
+    // Contrutor com todos os atributos
     public Produto(Long id, String nome, Integer quantidade, Float precoUnidade) {
         this.id = id;
         this.nome = nome;
@@ -23,6 +37,7 @@ public class Produto {
         this.precoUnidade = precoUnidade;
     }
 
+    // Getter e Setter
     public Long getId() {
         return id;
     }

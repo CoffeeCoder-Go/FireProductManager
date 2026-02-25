@@ -7,11 +7,15 @@ package entity;
 
 /**
  *
- * @author cliente
+ * @author Henrique Rigoni Nunes
  */
+// Entidade Evento
 public class Event {
+    // Identificador do evento
     private Long id;
+    // Tipo
     private EventType type;
+    // Mensagem
     private String message;
     
     public Event(Long id,String message,EventType type){

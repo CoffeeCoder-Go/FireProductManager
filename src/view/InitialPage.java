@@ -4,17 +4,18 @@
  */
 package view;
 
-import configuration.DatabaseConnection;
 import configuration.EventManager;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
-import entity.Event;
-import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,7 +40,22 @@ public class InitialPage extends javax.swing.JFrame {
     public InitialPage() {
         initComponents();
         
-        controller = new ProdutoController(new MySQLProdutosDAO(DatabaseConnection.connect()));
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e){
+                int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                
+                if(opcao == JOptionPane.YES_OPTION){
+                    
+                    
+                    System.exit(0);
+                }
+            }
+        });
+        
+        controller = new ProdutoController(new MySQLProdutosDAO());
         
         visualConfig();
         
@@ -158,7 +174,6 @@ public class InitialPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("All Products");
-        setAlwaysOnTop(true);
         setResizable(false);
         setSize(new java.awt.Dimension(1300, 1280));
 
