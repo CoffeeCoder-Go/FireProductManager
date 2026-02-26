@@ -7,11 +7,15 @@ package view;
 import configuration.EventManager;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
+import entity.Produto;
 import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -112,6 +116,32 @@ public class InitialPage extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
         controller.listAll(model);
+        
+        jTable1.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                 
+                 int row = jTable1.getSelectedRow();
+                 
+                 if(row != -1){
+                     Long id = (Long) jTable1.getValueAt(row, 0);
+                     String nome = (String) jTable1.getValueAt(row, 1);
+                     Integer quantidade = (Integer) jTable1.getValueAt(row, 2);
+                     Float precoPorUnidade = (Float) jTable1.getValueAt(row, 3);
+                     
+                     
+                     Produto produto = new Produto(id,nome,quantidade,precoPorUnidade);
+                     
+                     ProdutoDetails details = new ProdutoDetails(produto);
+                     
+                     details.setVisible(true);
+                     
+                    
+                 }
+            }
+        
+        });
     }
     
     

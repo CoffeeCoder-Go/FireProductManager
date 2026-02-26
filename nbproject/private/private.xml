@@ -6,6 +6,9 @@
             <file>file:/home/cliente/NetBeansProjects/GrnciadorDeEstoque/src/configuration/DatabaseConnection.java</file>
             <file>file:/home/cliente/NetBeansProjects/GrnciadorDeEstoque/src/view/InitialPage.java</file>
             <file>file:/home/cliente/NetBeansProjects/GrnciadorDeEstoque/.env</file>
+            <file>file:/home/cliente/NetBeansProjects/GrnciadorDeEstoque/src/controllers/ProdutoController.java</file>
+            <file>file:/home/cliente/NetBeansProjects/GrnciadorDeEstoque/src/view/ProdutoDetails.java</file>
+            <file>file:/home/cliente/NetBeansProjects/GrnciadorDeEstoque/src/view/Formulario.java</file>
         </group>
     </open-files>
 </project-private>

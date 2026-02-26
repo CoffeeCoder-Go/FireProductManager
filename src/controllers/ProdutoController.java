@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import dao.ProdutosDAO;
 import entity.EventType;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -30,6 +32,8 @@ public class ProdutoController {
         List<Produto> products = dao.getAll();
         
         model.setNumRows(0);
+        
+       
         
         for(Produto produto : products){
             
@@ -52,4 +56,6 @@ public class ProdutoController {
             model.addRow(new Object[]{ produto.getId(),produto.getNome(),produto.getQuantidade(),produto.getPrecoUnidade()});
         }
     }
+    
+   
 }
