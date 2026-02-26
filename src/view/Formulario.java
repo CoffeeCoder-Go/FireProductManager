@@ -8,6 +8,7 @@ import configuration.DatabaseConnection;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
 import entity.Produto;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,7 +32,7 @@ public class Formulario extends javax.swing.JFrame {
 
     public Formulario() {
         initComponents();
-        
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         controller = new ProdutoController(new MySQLProdutosDAO());
         
   
