@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class DatabaseConnection {
     // Carrega o dotenv
-    private final static Dotenv dotenv = Dotenv.load();
+    private static Dotenv dotenv;
     
     // Pega pelo .env ou variável de ambiente
     public static String URL;// URL de conexão
@@ -23,29 +23,39 @@ public class DatabaseConnection {
     public static String PASSWORD;// Senha do banco de dados
     
     static {
-        // Verifica se existe URL e se ele é não nulo no .env
-        if(!dotenv.get("URL").isEmpty() && dotenv.get("URL") != null){
-            URL = dotenv.get("URL");
+        dotenv = Dotenv.load();
+        
+        if(dotenv != null){
+            // Verifica se existe URL e se ele é não nulo no .env
+            if(!dotenv.get("URL").isEmpty() && dotenv.get("URL") != null){
+                URL = dotenv.get("URL");
+            }else{
+                // Se não pega das variáveis de ambiente
+                URL = System.getenv("URL");
+            }
+
+            // Verifica se existe USERNAME e se ele é não nulo no .env
+            if(!dotenv.get("USERNAME").isEmpty() && dotenv.get("USERNAME") != null){
+                USER = dotenv.get("USERNAME");
+            }else{
+                // Se não, pega das variáveis de ambiente
+                USER = System.getenv("USERNAME");
+            }
+
+            // Verifica se existe PASSWORD e se ele é não nulo no .env
+            if(!dotenv.get("PASSWORD").isEmpty() && dotenv.get("PASSWORD") != null){
+                PASSWORD = dotenv.get("PASSWORD");
+            }else{
+                // Se não, pega das variáveis de ambiente
+                PASSWORD = System.getenv("PASSWORD");
+            }
         }else{
-            // Se não pega das variáveis de ambiente
             URL = System.getenv("URL");
-        }
-        
-        // Verifica se existe USERNAME e se ele é não nulo no .env
-        if(!dotenv.get("USERNAME").isEmpty() && dotenv.get("USERNAME") != null){
-            USER = dotenv.get("USERNAME");
-        }else{
-            // Se não, pega das variáveis de ambiente
-            URL = System.getenv("USERNAME");
-        }
-        
-        // Verifica se existe PASSWORD e se ele é não nulo no .env
-        if(!dotenv.get("PASSWORD").isEmpty() && dotenv.get("PASSWORD") != null){
-            PASSWORD = dotenv.get("PASSWORD");
-        }else{
-            // Se não, pega das variáveis de ambiente
+            USER = System.getenv("USERNAME");
             PASSWORD = System.getenv("PASSWORD");
         }
+        
+        
     }
     
     // Conecta e retorna a conexão

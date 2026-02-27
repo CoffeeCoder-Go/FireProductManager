@@ -4,7 +4,6 @@
  */
 package view;
 
-import configuration.DatabaseConnection;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
 import entity.Produto;

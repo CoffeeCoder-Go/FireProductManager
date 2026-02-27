@@ -193,7 +193,7 @@ public class MySQLProdutosDAO implements ProdutosDAO{
     // Atualização
     // Modifica um produto pelo nome e retorna o tanto de linhas modificadas
     @Override
-    public Integer update(Long id,Produto newProduto) {
+    public void update(Long id,Produto newProduto) {
         DB = DatabaseConnection.connect();
         // Atualiza todos os campos cujo id é igual o da entrada
         String sql = "UPDATE produtos SET nome=?,quantidade=?,precoPorUnidade=? WHERE id=?";
@@ -211,8 +211,6 @@ public class MySQLProdutosDAO implements ProdutosDAO{
             // (Executa a atualização)
             int r = pstmt.executeUpdate();
             
-            // Retorna as linhas
-            return r;
         }catch(SQLException e){// Se tiver erros
             try{
                 DB.rollback();
@@ -223,8 +221,6 @@ public class MySQLProdutosDAO implements ProdutosDAO{
             // Mostra mensagem de erro
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", 0);
             
-            // Retorna um código de erro
-            return -1;
         }finally{
             DatabaseConnection.closeConnection(DB);
         }

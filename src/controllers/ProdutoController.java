@@ -57,5 +57,15 @@ public class ProdutoController {
         }
     }
     
+   public void update(Long id,Produto produto){
+       dao.update(id, produto);
+       EventManager.add("Produto atualizado com sucesso!", EventType.UPDATE);
+       
+   }
    
+   public void delete(Long id){
+       dao.delete(id);
+       
+       EventManager.add("Produto deletado com sucesso", EventType.DELETE);
+   }
 }
