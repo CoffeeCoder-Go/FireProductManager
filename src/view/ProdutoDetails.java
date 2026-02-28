@@ -7,7 +7,11 @@ package view;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
 import entity.Produto;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +38,9 @@ public class ProdutoDetails extends javax.swing.JFrame {
         nome.setText(this.produto.getNome());
         quantidade.setText(this.produto.getQuantidade().toString());
         preco.setText(this.produto.getPrecoUnidade().toString());
+        
+        
+        
         
     }
 
@@ -188,8 +195,20 @@ public class ProdutoDetails extends javax.swing.JFrame {
 
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
         // TODO add your handling code here:
-        controller.delete(produto.getId());
-        this.dispose();
+        
+        int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar "+produto.getNome()+"?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                
+        if(opcao == JOptionPane.YES_OPTION){
+            controller.delete(produto.getId());
+                
+            dispose();
+        }
+       
+        
+        
+        
+        
+        
     }//GEN-LAST:event_deletarActionPerformed
 
     /**
