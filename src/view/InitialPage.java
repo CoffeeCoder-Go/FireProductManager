@@ -8,6 +8,7 @@ import configuration.EventManager;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
 import entity.Produto;
+import events.MouseTableAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -117,31 +118,11 @@ public class InitialPage extends javax.swing.JFrame {
 
         controller.listAll(model);
         
-        jTable1.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-                 
-                 int row = jTable1.getSelectedRow();
-                 
-                 if(row != -1){
-                     Long id = (Long) jTable1.getValueAt(row, 0);
-                     String nome = (String) jTable1.getValueAt(row, 1);
-                     Integer quantidade = (Integer) jTable1.getValueAt(row, 2);
-                     Float precoPorUnidade = (Float) jTable1.getValueAt(row, 3);
-                     
-                     
-                     Produto produto = new Produto(id,nome,quantidade,precoPorUnidade);
-                     
-                     ProdutoDetails details = new ProdutoDetails(produto);
-                     
-                     details.setVisible(true);
-                     
-                    
-                 }
-            }
         
-        });
+        
+        
+        jTable1.addMouseListener(new MouseTableAdapter(jTable1));
+        
     }
     
     
