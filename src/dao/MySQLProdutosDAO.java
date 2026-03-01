@@ -30,7 +30,7 @@ public class MySQLProdutosDAO implements ProdutosDAO{
         // Comando sql para inserção
         String sql = "INSERT INTO produtos(nome,quantidade,precoPorUnidade) VALUES (?,?,?)";
         
-        try(PreparedStatement pstm = DB.prepareStatement(sql)){
+        try(PreparedStatement pstm = DB.prepareStatement(sql)){// Prepara INSERÇÃO
             
             // (1,2,3) = (?,?,?)
             pstm.setString(1, produto.getNome());
@@ -40,6 +40,9 @@ public class MySQLProdutosDAO implements ProdutosDAO{
             // Executa
             pstm.execute();
         }
+        
+        // Fecha conexão
+        DatabaseConnection.closeConnection(DB);
     }
 
     // Listagem
@@ -53,9 +56,7 @@ public class MySQLProdutosDAO implements ProdutosDAO{
         // Comando sql de Query
         String sql = "SELECT * FROM produtos";
         
-        try(PreparedStatement ps = DB.prepareStatement(sql)){
-            // Comando sql preparado
-            
+        try(PreparedStatement ps = DB.prepareStatement(sql)){// Comando sql preparado
             
             // Executa a consulta
             ResultSet rs = ps.executeQuery(); // Conjunto de resultados
@@ -75,6 +76,9 @@ public class MySQLProdutosDAO implements ProdutosDAO{
             }
         }
         
+        // Fecha conexão
+        DatabaseConnection.closeConnection(DB);
+        
         // Retorna todos os produtos
         return produtos;
     }
@@ -87,9 +91,7 @@ public class MySQLProdutosDAO implements ProdutosDAO{
         List<Produto> produtos = new ArrayList<>();// Mesma coisa, lista de produtos
         String sql = "SELECT * FROM produtos WHERE nome LIKE ?";// pega todos cujo nome comece com a expressão
         
-        try(PreparedStatement pstmt = DB.prepareStatement(sql)){
-            // Prepara a consula
-            
+        try(PreparedStatement pstmt = DB.prepareStatement(sql)){// Prepara a consulta
             
             // Gambiarra pra botar a expressão
             pstmt.setString(1, name+"%");
@@ -112,6 +114,9 @@ public class MySQLProdutosDAO implements ProdutosDAO{
             }
         }
         
+        // Fecha conexão
+        DatabaseConnection.closeConnection(DB);
+        
         // Retorna a lista
         return produtos;
     }
@@ -119,14 +124,12 @@ public class MySQLProdutosDAO implements ProdutosDAO{
     // Detalhes
     // Pega um único produto pelo id
     @Override
-    public Produto getById(Long id) throws SQLException{
+    public Produto getById(Long id) throws SQLException,RuntimeException{
         DB = DatabaseConnection.connect();
         Produto produto; // Declara um produto
         String sql = "SELECT * FROM produtos WHERE id=?";// Pega todos cujo id é igual o da entrada
         
-        try(PreparedStatement pstmt = DB.prepareStatement(sql)){
-            // Prepara consulta
-            
+        try(PreparedStatement pstmt = DB.prepareStatement(sql)){// Prepara consulta
             
             // 1=?
             pstmt.setLong(1, id);
@@ -147,10 +150,15 @@ public class MySQLProdutosDAO implements ProdutosDAO{
                 // Manda exceção se não existir pelo menos 1
                 throw new RuntimeException("Não existe um produto com esse id");
             }
+            
+            // Fecha conexão
+            DatabaseConnection.closeConnection(DB);
+            
+            // Retorna produto
+            return produto;
         }
         
-        // Retorna o produto
-        return produto;
+        
     }
 
     // Atualização
@@ -161,9 +169,7 @@ public class MySQLProdutosDAO implements ProdutosDAO{
         // Atualiza todos os campos cujo id é igual o da entrada
         String sql = "UPDATE produtos SET nome=?,quantidade=?,precoPorUnidade=? WHERE id=?";
         
-        try(PreparedStatement pstmt = DB.prepareStatement(sql)){
-            // Prepara a atualização
-            
+        try(PreparedStatement pstmt = DB.prepareStatement(sql)){// Prepara a atualização
             
             // (nome=?,quantidade=?,precoPorUnidade=? WHERE id=?) = (1,2,3,4)
             pstmt.setString(1, newProduto.getNome());
@@ -172,7 +178,10 @@ public class MySQLProdutosDAO implements ProdutosDAO{
             pstmt.setLong(4, id);
             
             // (Executa a atualização)
-            int r = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            
+            // Fecha a conexão
+            DatabaseConnection.closeConnection(DB);
             
         }
     }
@@ -184,16 +193,22 @@ public class MySQLProdutosDAO implements ProdutosDAO{
         DB = DatabaseConnection.connect();
         String sql = "DELETE FROM produtos WHERE id=?";// Deleta um produto se o id for igual o da entrada
         
-        try(PreparedStatement pstmt = DB.prepareStatement(sql)){
-            // Prepara a exclusão
-            
+        try(PreparedStatement pstmt = DB.prepareStatement(sql)){// Prepara a exclusão
             
             // (id=?)=1
             pstmt.setLong(1, id);
             
-            // Executa
-            return pstmt.execute();
+            // Executa e guarda numa variável
+            boolean result = pstmt.execute();
+            
+            // Fecha a conexão
+            DatabaseConnection.closeConnection(DB);
+            
+            // Retorna o resultado
+            return result;
         }
+        
+        
     }
     
     

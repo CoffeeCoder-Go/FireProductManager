@@ -9,6 +9,9 @@
    id="svg5"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    sodipodi:docname="logo.svg"
+   inkscape:export-filename="logo.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -26,14 +29,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.74653479"
-     inkscape:cx="237.76521"
-     inkscape:cy="454.09806"
+     inkscape:cx="344.92699"
+     inkscape:cy="683.15637"
      inkscape:window-width="1920"
      inkscape:window-height="1008"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2" />
+     inkscape:current-layer="layer5" />
   <defs
      id="defs2">
     <linearGradient
@@ -58,6 +61,19 @@
        y2="148.37125"
        gradientUnits="userSpaceOnUse" />
   </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Sombra"
+     transform="translate(3.7469508,-8.7898622)">
+    <ellipse
+       style="fill:#000000;stroke:#b01f1f;stroke-width:0.264583"
+       id="path241"
+       cx="106.13021"
+       cy="197.86429"
+       rx="93.653397"
+       ry="37.791256" />
+  </g>
   <g
      inkscape:label="Parede"
      inkscape:groupmode="layer"
@@ -96,5 +112,73 @@
        d="m 21.281465,183.48371 c 25.795813,-32.17677 51.196738,-13.26195 63.000105,-16.21279 8.126428,-2.03161 13.213543,-5.79041 22.32816,-4.96181 6.8702,0.62456 13.22674,6.16489 20.13048,4.56919 9.6257,-2.22484 17.19916,-10.31376 26.95907,-11.70803 10.17621,-1.45374 29.29363,2.73732 25.85675,16.44163 -1.37081,5.46599 -11.32485,13.81538 -16.65311,14.88103 -10.30296,2.06059 -19.94042,-5.09199 -30.23008,-5.09199 -7.4777,0 -16.45218,5.52475 -24.60828,6.68991 -21.224017,3.032 -86.117066,-3.86304 -86.783095,-4.60714 z"
        id="path546"
        inkscape:label="terra-base" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Fumaça">
+    <ellipse
+       style="fill:#000000;stroke:#b01f1f;stroke-width:0.264583"
+       id="path303"
+       cx="13.105393"
+       cy="229.04001"
+       rx="3.6741111"
+       ry="4.7344747" />
+    <ellipse
+       style="fill:#000000;stroke:#b01f1f;stroke-width:0.264583"
+       id="path305"
+       cx="61.076881"
+       cy="278.98526"
+       rx="9.4706469"
+       ry="8.9732676" />
+    <ellipse
+       style="fill:#000000;stroke:#b01f1f;stroke-width:0.264583"
+       id="path307"
+       cx="174.36417"
+       cy="273.13251"
+       rx="9.2930603"
+       ry="6.72328" />
+    <ellipse
+       style="fill:#000000;stroke:#b01f1f;stroke-width:0.264583"
+       id="path309"
+       cx="189.08934"
+       cy="231.39571"
+       rx="6.3272777"
+       ry="8.207221" />
+    <ellipse
+       style="fill:#000000;stroke:#b01f1f;stroke-width:0.264583"
+       id="path311"
+       cx="118.21766"
+       cy="275.30298"
+       rx="10.433132"
+       ry="8.5804768" />
+    <ellipse
+       style="fill:#999999;stroke:#b01f1f;stroke-width:0.264583"
+       id="path365"
+       cx="14.919019"
+       cy="40.537369"
+       rx="13.479375"
+       ry="36.260414" />
+    <ellipse
+       style="fill:#999999;stroke:#b01f1f;stroke-width:0.264583"
+       id="path367"
+       cx="37.590294"
+       cy="-68.460434"
+       rx="0.66867113"
+       ry="0.44488484" />
+    <ellipse
+       style="fill:#999999;stroke:#b01f1f;stroke-width:0.264583"
+       id="path369"
+       cx="45.386314"
+       cy="29.548731"
+       rx="15.284159"
+       ry="19.187275" />
+    <ellipse
+       style="fill:#999999;stroke:#b01f1f;stroke-width:0.264583"
+       id="path371"
+       cx="55.174755"
+       cy="46.387707"
+       rx="9.4012308"
+       ry="6.1637197" />
   </g>
 </svg>

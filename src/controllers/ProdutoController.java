@@ -13,6 +13,7 @@ import dao.ProdutosDAO;
 import entity.EventType;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import utils.Validation;
 
 /**
  *
@@ -30,6 +31,7 @@ public class ProdutoController {
         this.dao = dao;
     }
     
+    // Lista todos e coloca na tabela
     public void listAll(DefaultTableModel model){
         try{
             List<Produto> products = dao.getAll();
@@ -47,20 +49,22 @@ public class ProdutoController {
         }
     }
     
+    // Cria um produto válido
     public void create(Produto produto){
         try{
+            if(Validation.valid(produto)){
+                dao.create(produto);
+                EventManager.add("Produto criado com sucesso!", EventType.CREATE);
+            }
             
-
             
-            
-            
-            dao.create(produto);
         }catch(SQLException | RuntimeException e){
             
-            JOptionPane.showMessageDialog(null, "Não foi possível criar por causa de:"+e.getMessage(), "erro", 0);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "erro", 0);
         }
     }
     
+    // Procura pelo nome
     public void searchByName(DefaultTableModel model,String nome){
         try{
             List<Produto> products = dao.searchByName(nome);
@@ -76,18 +80,24 @@ public class ProdutoController {
         }
     }
     
-   public void update(Long id,Produto produto){
-       try{
+    // Atualiza um produto
+    public void update(Long id,Produto produto){
+        try{
+           Validation.valid(produto);
+           
            dao.update(id, produto);
            EventManager.add("Produto atualizado com sucesso!", EventType.UPDATE);
-       }catch(SQLException e){
+        }catch(SQLException e){
            JOptionPane.showMessageDialog(null, "Não foi possível criar por causa de:"+e.getMessage(), "erro", 0);
-       }
+        }
        
-   }
+    }
    
+    // Deeleta um produto
    public void delete(Long id){
        try{
+           
+           
            dao.delete(id);
        
            EventManager.add("Produto deletado com sucesso", EventType.DELETE);

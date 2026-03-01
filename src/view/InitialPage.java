@@ -4,6 +4,7 @@
  */
 package view;
 
+import configuration.DatabaseTypes;
 import configuration.EventManager;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -45,8 +47,15 @@ public class InitialPage extends javax.swing.JFrame {
     public InitialPage() {
         initComponents();
         
+        // Seta um icone
+        ImageIcon icon = new ImageIcon("./src/resources/assets/logo.png");
+        
+        this.setIconImage(icon.getImage());
+        
+        // Seta pra não fazer nada ao fechar
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
+        // Algoritmo para garantir desejo do usuário
         addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e){
@@ -60,12 +69,16 @@ public class InitialPage extends javax.swing.JFrame {
             }
         });
         
-        controller = new ProdutoController(new MySQLProdutosDAO());
+        // Chama o controlador que vai usar MySQL
+        controller = new ProdutoController(DatabaseTypes.MYSQL);
         
+        // Chama configuração visual
         visualConfig();
         
+        // Ao iniciar
         onStart();
         
+        // Ao atualizar
         onUpdate();
         
     }
@@ -90,11 +103,13 @@ public class InitialPage extends javax.swing.JFrame {
     
     private void onUpdate(){
         
+        // Realiza a cada 1 segundo
         Timer timer = new Timer(1,new ActionListener() {
             
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     
+                    // Atualiza a tabela se houver evento ainda
                     while(!EventManager.isEmpty()){
                         reloadTable();
                         
@@ -114,13 +129,13 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     public void reloadTable(){
+        // Captura modelo da tabela
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
+        // Passa o modelo para o listador do controller
         controller.listAll(model);
         
-        
-        
-        
+        // Adiciona eventos de mouse
         jTable1.addMouseListener(new MouseTableAdapter(jTable1));
         
     }
@@ -129,17 +144,23 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Se houver pesquisa também
     public void reloadTable(String nome){
+        // Captura modelo da tabela
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
+        // Passa o modelo para o procurador do controller
         controller.searchByName(model, nome);
+        
+        // Adiciona eventos de mouse
+        jTable1.addMouseListener(new MouseTableAdapter(jTable1));
     }
     
     
     
     
     private void onStart(){
+        // Recarrega a tabela toda vez que iniciar
         reloadTable();
         
         
@@ -155,8 +176,9 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Configuração visual
     private void visualConfig(){
+        // Coloca no meio
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
             
         int largura = dimension.width;
@@ -164,7 +186,7 @@ public class InitialPage extends javax.swing.JFrame {
         int x = (largura - this.getWidth())/2;
         int y = (altura - this.getHeight())/2;
         this.setLocation(x,y);
-        this.setSearchExistent(false);
+        this.setSearchExistent(false);// Torna pesquisa invisivel
     }
 
    
@@ -179,7 +201,7 @@ public class InitialPage extends javax.swing.JFrame {
         menu = new javax.swing.JMenuBar();
         create = new javax.swing.JMenu();
         goToForm = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        restart = new javax.swing.JMenuItem();
         pesquisar = new javax.swing.JMenu();
         enableSearch = new javax.swing.JMenuItem();
 
@@ -202,6 +224,7 @@ public class InitialPage extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.black));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -261,23 +284,41 @@ public class InitialPage extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        menu.setBackground(new java.awt.Color(0, 0, 255));
+        menu.setBorder(null);
+        menu.setForeground(new java.awt.Color(255, 255, 255));
+        menu.setBorderPainted(false);
+        menu.setOpaque(true);
+
+        create.setBackground(new java.awt.Color(0, 51, 255));
+        create.setBorder(null);
+        create.setForeground(new java.awt.Color(255, 255, 255));
         create.setText("Dados");
+        create.setBorderPainted(false);
 
         goToForm.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        goToForm.setBackground(new java.awt.Color(0, 51, 255));
+        goToForm.setForeground(new java.awt.Color(255, 255, 255));
         goToForm.setText("Registrar");
         goToForm.addActionListener(this::goToFormActionPerformed);
         create.add(goToForm);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
-        jMenuItem1.setText("Atualizar");
-        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
-        create.add(jMenuItem1);
+        restart.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        restart.setBackground(new java.awt.Color(0, 51, 255));
+        restart.setForeground(new java.awt.Color(255, 255, 255));
+        restart.setText("Atualizar");
+        restart.addActionListener(this::restartActionPerformed);
+        create.add(restart);
 
         menu.add(create);
 
+        pesquisar.setBackground(new java.awt.Color(0, 51, 255));
+        pesquisar.setForeground(new java.awt.Color(255, 255, 255));
         pesquisar.setText("Pesquisar");
 
         enableSearch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        enableSearch.setBackground(new java.awt.Color(0, 51, 255));
+        enableSearch.setForeground(new java.awt.Color(255, 255, 255));
         enableSearch.setText("Caixa");
         enableSearch.addActionListener(this::enableSearchActionPerformed);
         pesquisar.add(enableSearch);
@@ -331,15 +372,6 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    private void goToFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToFormActionPerformed
-
-        
-        Formulario formulario = new Formulario();
-        
-        formulario.setVisible(true);
-        
-    }//GEN-LAST:event_goToFormActionPerformed
-
     
     
     
@@ -353,7 +385,7 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Viabiliza pesquisa
     private void enableSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableSearchActionPerformed
 
     
@@ -371,31 +403,23 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Toda fez que ganhar foco, limpa os . da pesquisa
     private void searchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFocusGained
 
         if(this.search.getText().equals("...")){
             this.search.setText("");
         }
     }//GEN-LAST:event_searchFocusGained
-
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    // Atualiza a tabela manualmente
+    private void restartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartActionPerformed
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         
         this.controller.listAll(model);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_restartActionPerformed
 
+    // Se pressionar enter pesquisa
     private void searchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyPressed
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             reloadTable(search.getText());
@@ -403,6 +427,15 @@ public class InitialPage extends javax.swing.JFrame {
         
     
     }//GEN-LAST:event_searchKeyPressed
+    
+    // Vai pro formulário de pesquisa
+    private void goToFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goToFormActionPerformed
+
+        Formulario formulario = new Formulario();
+
+        formulario.setVisible(true);
+
+    }//GEN-LAST:event_goToFormActionPerformed
 
     
     
@@ -415,7 +448,7 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Chama a página
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
             InitialPage initPage = new InitialPage();
@@ -440,7 +473,7 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Viabiliza a pesquisa
     public void setSearchExistent(boolean b){
         this.search.setVisible(b);
         this.revalidate();
@@ -460,7 +493,7 @@ public class InitialPage extends javax.swing.JFrame {
     
     
     
-    
+    // Retorna estado da pesquisa
     public boolean getSearchExistent(){
         return this.search.isVisible();
     }
@@ -485,13 +518,13 @@ public class InitialPage extends javax.swing.JFrame {
     private javax.swing.JMenu create;
     private javax.swing.JMenuItem enableSearch;
     private javax.swing.JMenuItem goToForm;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenu pesquisar;
+    private javax.swing.JMenuItem restart;
     private javax.swing.JTextField search;
     // End of variables declaration//GEN-END:variables
 }

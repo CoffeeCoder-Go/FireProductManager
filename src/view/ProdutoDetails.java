@@ -4,12 +4,9 @@
  */
 package view;
 
+import configuration.DatabaseTypes;
 import controllers.ProdutoController;
-import dao.MySQLProdutosDAO;
 import entity.Produto;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,23 +15,27 @@ import javax.swing.JOptionPane;
  * @author cliente
  */
 public class ProdutoDetails extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ProdutoDetails.class.getName());
+    // Produto a ser detalhado
     private Produto produto;
+    // Controller
     private ProdutoController controller;
     
     /**
-     * Creates new form Produto
+     * Cria um novo detalhamento do produto
      * 
      * @param produto the produto has been detailed
      */
     public ProdutoDetails(Produto produto) {
         initComponents();
+        // Não faz nada ao fechar
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
+        // Dados
         this.produto = produto;
-        this.controller = new ProdutoController(new MySQLProdutosDAO());
+        // Controller
+        this.controller = new ProdutoController(DatabaseTypes.MYSQL);
         
+        // Seta com informações do produto
         nome.setText(this.produto.getNome());
         quantidade.setText(this.produto.getQuantidade().toString());
         preco.setText(this.produto.getPrecoUnidade().toString());
@@ -46,6 +47,7 @@ public class ProdutoDetails extends javax.swing.JFrame {
 
     private ProdutoDetails() {
         initComponents();
+        // Não faz nada ao fechar
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -159,12 +161,14 @@ public class ProdutoDetails extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Sai da tela
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         // TODO add your handling code here:
         
         this.dispose();
     }//GEN-LAST:event_exitActionPerformed
 
+    // Atualiza o produto
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
         
@@ -175,6 +179,7 @@ public class ProdutoDetails extends javax.swing.JFrame {
         this.controller.update(produto.getId(), produto);
     }//GEN-LAST:event_saveActionPerformed
 
+    // Diminui a quantidade
     private void minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusActionPerformed
         // TODO add your handling code here:
         int number = Integer.parseInt(quantidade.getText());
@@ -184,6 +189,7 @@ public class ProdutoDetails extends javax.swing.JFrame {
         quantidade.setText(Integer.toString(number));
     }//GEN-LAST:event_minusActionPerformed
 
+    // Aumenta
     private void plusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusActionPerformed
         // TODO add your handling code here:
         int number = Integer.parseInt(quantidade.getText());
@@ -193,11 +199,13 @@ public class ProdutoDetails extends javax.swing.JFrame {
         quantidade.setText(Integer.toString(number));
     }//GEN-LAST:event_plusActionPerformed
 
+    // Deleta
     private void deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletarActionPerformed
         // TODO add your handling code here:
         
         int opcao = JOptionPane.showConfirmDialog(null, "Deseja realmente deletar "+produto.getNome()+"?", "Confirmação", JOptionPane.YES_NO_OPTION);
                 
+        // Deleta apenas se o usuário quiser
         if(opcao == JOptionPane.YES_OPTION){
             controller.delete(produto.getId());
                 
@@ -228,7 +236,7 @@ public class ProdutoDetails extends javax.swing.JFrame {
                 }
             }
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            System.out.println("Erro:"+ex.getMessage());
         }
         //</editor-fold>
 
