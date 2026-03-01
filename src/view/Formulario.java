@@ -4,6 +4,7 @@
  */
 package view;
 
+import configuration.DatabaseTypes;
 import controllers.ProdutoController;
 import dao.MySQLProdutosDAO;
 import entity.Produto;
@@ -28,11 +29,14 @@ public class Formulario extends javax.swing.JFrame {
     
     
 
-
+    // Contrutor padrão
     public Formulario() {
         initComponents();
+        // Inviabiliza operação de fechar pelo X
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        controller = new ProdutoController(new MySQLProdutosDAO());
+        
+        // Criar um novo produtoController
+        controller = new ProdutoController(DatabaseTypes.MYSQL);
         
   
         
@@ -63,11 +67,6 @@ public class Formulario extends javax.swing.JFrame {
 
         nome.setMinimumSize(new java.awt.Dimension(120, 100));
         nome.setPreferredSize(new java.awt.Dimension(120, 25));
-        nome.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                nomeFocusLost(evt);
-            }
-        });
 
         jLabel1.setText("Nome");
 
@@ -85,11 +84,6 @@ public class Formulario extends javax.swing.JFrame {
 
         precoPorUnidade.setMinimumSize(new java.awt.Dimension(120, 25));
         precoPorUnidade.setPreferredSize(new java.awt.Dimension(120, 25));
-        precoPorUnidade.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                precoPorUnidadeFocusLost(evt);
-            }
-        });
 
         save.setBackground(new java.awt.Color(51, 51, 255));
         save.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,7 +155,7 @@ public class Formulario extends javax.swing.JFrame {
 
     
     
-    
+    // Para diminuir a quantidade
     private void minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusActionPerformed
 
         int number = Integer.parseInt(quantidaddeTexto.getText());
@@ -177,7 +171,7 @@ public class Formulario extends javax.swing.JFrame {
     
     
     
-    
+    // Aumentar
     private void moreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreActionPerformed
 
         int number = Integer.parseInt(quantidaddeTexto.getText());
@@ -193,7 +187,7 @@ public class Formulario extends javax.swing.JFrame {
     
     
     
-    
+    //Sair
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
 
         this.dispose();
@@ -208,13 +202,15 @@ public class Formulario extends javax.swing.JFrame {
     
     
     
-    
+    // Salvar
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         try{
             Produto produto = new Produto();
+            
             produto.setNome(nome.getText());
             produto.setPrecoUnidade(Float.valueOf(precoPorUnidade.getText()));
             produto.setQuantidade(Integer.valueOf(quantidaddeTexto.getText()));
+            
             controller.create(produto);
 
             
@@ -223,7 +219,7 @@ public class Formulario extends javax.swing.JFrame {
             precoPorUnidade.setText("");
             
    
-        }catch(NumberFormatException e){
+        }catch(NumberFormatException e){// Se ocorrer erro de transformação
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", 0);
         }
     }//GEN-LAST:event_saveActionPerformed
@@ -241,10 +237,6 @@ public class Formulario extends javax.swing.JFrame {
     
     
     
-    private void nomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nomeFocusLost
-
-    }//GEN-LAST:event_nomeFocusLost
-
     
     
     
@@ -258,10 +250,6 @@ public class Formulario extends javax.swing.JFrame {
     
     
     
-    private void precoPorUnidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_precoPorUnidadeFocusLost
-
-    }//GEN-LAST:event_precoPorUnidadeFocusLost
-
 
     
     
@@ -272,7 +260,7 @@ public class Formulario extends javax.swing.JFrame {
     
     
     
-    
+    // Torna vísivel
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> new Formulario().setVisible(true));
     }

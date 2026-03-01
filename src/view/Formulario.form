@@ -97,9 +97,6 @@
           <Dimension value="[120, 25]"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="nomeFocusLost"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -146,9 +143,6 @@
           <Dimension value="[120, 25]"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="precoPorUnidadeFocusLost"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="save">
       <Properties>

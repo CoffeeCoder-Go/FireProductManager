@@ -17,7 +17,7 @@ public interface ProdutosDAO {
     public void create(Produto produto) throws SQLException;// Registra um produto
     public List<Produto> getAll() throws SQLException;// Pega todos os produtos
     public List<Produto> searchByName(String nome) throws SQLException;// Procura produto pelo nome
-    public Produto getById(Long id) throws SQLException;// Pega um produto especifico pelo id
+    public Produto getById(Long id) throws SQLException,RuntimeException;// Pega um produto especifico pelo id
     public void update(Long id,Produto newProduto) throws SQLException;// Modifica um produto e retorna o tanto de linhas que foram modificadas
     public Boolean delete(Long id) throws SQLException;// Deleta um produto e retorna um booleano
 }
