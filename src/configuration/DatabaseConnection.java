@@ -37,9 +37,9 @@ public class DatabaseConnection {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Config File", JOptionPane.ERROR_MESSAGE);
         }
         
-        URL = properties.getProperty("database.info.url");
-        USER = properties.getProperty("database.info.user");
-        PASSWORD=properties.getProperty("database.info.password");
+        URL = properties.getProperty("database.info.url", System.getenv("URL"));
+        USER = properties.getProperty("database.info.user",System.getenv("USER"));
+        PASSWORD=properties.getProperty("database.info.password",System.getenv("PASSWORD"));
     }
     
     // Conecta e retorna a conexão
