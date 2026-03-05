@@ -4,6 +4,7 @@
  */
 package configuration;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,9 +38,11 @@ public class DatabaseConnection {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Config File", JOptionPane.ERROR_MESSAGE);
         }
         
-        URL = properties.getProperty("database.info.url", System.getenv("URL"));
-        USER = properties.getProperty("database.info.user",System.getenv("USER"));
-        PASSWORD=properties.getProperty("database.info.password",System.getenv("PASSWORD"));
+        Dotenv dotenv = Dotenv.load();
+        
+        URL = properties.getProperty("database.info.url", dotenv.get("URL"));
+        USER = properties.getProperty("database.info.user",dotenv.get("USER"));
+        PASSWORD=properties.getProperty("database.info.password",dotenv.get("PASSWORD"));
     }
     
     // Conecta e retorna a conexão
