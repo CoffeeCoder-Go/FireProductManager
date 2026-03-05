@@ -48,7 +48,7 @@ public class InitialPage extends javax.swing.JFrame {
         initComponents();
         
         // Seta um icone
-        ImageIcon icon = new ImageIcon("./src/resources/assets/logo.png");
+        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("resources/assets/logo.png"));
         
         this.setIconImage(icon.getImage());
         

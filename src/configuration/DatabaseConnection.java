@@ -4,18 +4,19 @@
  */
 package configuration;
 
-import io.github.cdimascio.dotenv.Dotenv;// Biblioteca para acessar .env
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.swing.JOptionPane;
 /**
  *
  * @author cliente
  */
 public class DatabaseConnection {
-    // Carrega o dotenv
-    private static Dotenv dotenv;
     
     // Pega pelo .env ou variável de ambiente
     public static String URL;// URL de conexão
@@ -23,39 +24,22 @@ public class DatabaseConnection {
     public static String PASSWORD;// Senha do banco de dados
     
     static {
-        dotenv = Dotenv.load();
+        Properties properties = new Properties();
         
-        if(dotenv != null){
-            // Verifica se existe URL e se ele é não nulo no .env
-            if(!dotenv.get("URL").isEmpty() && dotenv.get("URL") != null){
-                URL = dotenv.get("URL");
-            }else{
-                // Se não pega das variáveis de ambiente
-                URL = System.getenv("URL");
-            }
+        try (InputStream file = DatabaseConnection.class.getClassLoader().getResourceAsStream("properties/main.properties")) {
 
-            // Verifica se existe USERNAME e se ele é não nulo no .env
-            if(!dotenv.get("USERNAME").isEmpty() && dotenv.get("USERNAME") != null){
-                USER = dotenv.get("USERNAME");
-            }else{
-                // Se não, pega das variáveis de ambiente
-                USER = System.getenv("USERNAME");
-            }
+            properties.load(file);
 
-            // Verifica se existe PASSWORD e se ele é não nulo no .env
-            if(!dotenv.get("PASSWORD").isEmpty() && dotenv.get("PASSWORD") != null){
-                PASSWORD = dotenv.get("PASSWORD");
-            }else{
-                // Se não, pega das variáveis de ambiente
-                PASSWORD = System.getenv("PASSWORD");
-            }
-        }else{
-            URL = System.getenv("URL");
-            USER = System.getenv("USERNAME");
-            PASSWORD = System.getenv("PASSWORD");
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Config File", JOptionPane.ERROR_MESSAGE);
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Config File", JOptionPane.ERROR_MESSAGE);
         }
         
-        
+        URL = properties.getProperty("database.info.url");
+        USER = properties.getProperty("database.info.user");
+        PASSWORD=properties.getProperty("database.info.password");
     }
     
     // Conecta e retorna a conexão
